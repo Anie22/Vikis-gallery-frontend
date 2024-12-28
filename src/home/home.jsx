@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import landingImg from '../assets/home.jpg'
 import aboutImg from '../assets/about.jpg'
 import { Seller } from "../component/seller";
 import { Subscribe } from "../component/subscribe";
 import { HiChevronRight } from "react-icons/hi";
 import { Testimonial } from "../component/testimonial";
+import { useEffect } from "react";
 
 export const Home = () => {
+    const [heroImgLength, setHeroImgLength] = useState(0);
+    const [opacity, setOpacity] = useState(0);
 
     const welcomeMSG = [
         {msg: 'Welcome to viks gallery'},
@@ -15,10 +18,36 @@ export const Home = () => {
         {msg: 'Welcome to viks gallery'}
     ];
 
+    const heroImg = [
+        {img: landingImg},
+        {img: aboutImg},
+        {img: landingImg},
+        {img: aboutImg}
+    ];
+    
+    useEffect(() => {
+        const showImg = setTimeout(() => {
+            setOpacity(1)
+        }, 110);
+
+        return () => clearTimeout(showImg);
+    }, [heroImgLength]);
+
+    useEffect(() => {
+        const automateHeroImg = setInterval(() => {
+            setOpacity(0)
+            setTimeout(() => {
+                setHeroImgLength((pre) => (pre + 1) % heroImg.length)
+            }, 200);
+        }, 3500);
+
+        return () => clearInterval(automateHeroImg);
+    }, []);
+
     return (
         <div>
             <section className="h-screen w-full bg-white text-white lg:flex relative">
-                <div className="w-full lg:w-2/5 bg-black opacity-60 lg:opacity-100 px-4 lg:px-10 flex-initial absolute lg:relative top-0 bottom-0">
+                <div className="w-full lg:w-2/5 bg-black opacity-60 lg:opacity-100 px-4 lg:px-10 flex-initial absolute z-50 lg:relative top-0 bottom-0">
                     <div className="py-16 flex flex-col gap-7">
                         <h3 className="text-4xl lg:text-5xl font-bold w-full">Find Art that Speaks to Your Heart</h3>
                         <div className="w-full">
@@ -26,16 +55,18 @@ export const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex-1 w-full lg:w-3/5 h-screen">
-                    <div className="w-full h-screen">
-                        <img className="h-full" src={landingImg} alt="" />
+                <div className="flex-1 w-full lg:w-3/5 h-screen overflow-hidden">
+                    <div className="w-full h-screen flex hero-hol" style={{ transform: `translateX(-${heroImgLength * 100}%)`, opacity: `${opacity}`}}>
+                        {heroImg.map((images, index) => (
+                            <img key={index} className="h-full w-full" src={images.img} alt="" />
+                        ))}
                     </div>
                 </div>
             </section>
             <section className="w-full overflow-hidden">
                 <div className="w-121 overflow-hidden flex py-5 gap-8">
-                    {welcomeMSG.map((msg) => ( 
-                        <div className="text-7xl stroke-text text-transparent flex-initial w-120 font-black uppercase">
+                    {welcomeMSG.map((msg, index) => ( 
+                        <div key={index} className="text-7xl stroke-text text-transparent flex-initial w-120 font-black uppercase">
                             <h3>{msg.msg}</h3>
                         </div>
                     ))}
