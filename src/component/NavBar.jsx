@@ -222,22 +222,33 @@ export const NavBar = () => {
                         </div>
                       </div>
                       <div className="w-full flex items-end gap-2 flex-col">
-                        <div className="w-fit cursor-pointer">
-                          <BiChevronDown className="text-[2em]" />
-                        </div>
-                        {activeToggle ? (
-                          <div className="h-fit p-2 w-full rounded-[7px] border-solid border-slate-300 border-[1px] absolute top-[3em] start-0 end-0 bg-white">
-                            <button
-                              className="h-12 w-full rounded-[8px] border-solid border-red-700 border-[1px]"
-                              type="button"
-                            >
-                              Logout
-                            </button>
-                          </div>
-                        ) : (
-                          ""
-                        )}
+                    <div className="w-fit flex items-end flex-col gap-2 h-fit">
+                      <div
+                        className="w-fit cursor-pointer"
+                        onClick={() => openActiveToggle()}
+                      >
+                        <BiChevronDown className="text-[2em]" />
                       </div>
+                      {activeToggle ? (
+                        <div
+                          className={
+                            scroll
+                              ? "h-fit p-2 w-[14em] rounded-[7px] border-solid border-slate-300 border-[1px] absolute end-[-3em] top-[2.5em] z-[999] bg-white"
+                              : "h-fit p-2 w-[14em] rounded-[7px] border-solid border-slate-300 border-[1px] absolute end-[-2em] top-[2.5em] z-[999] bg-white"
+                          }
+                        >
+                          <button
+                            onClick={() => logOut()}
+                            className="h-12 w-full rounded-[8px] border-solid border-red-500 border-[2px]"
+                            type="button"
+                          >
+                            Logout
+                          </button>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                     </div>
                   ) : (
                     <a
