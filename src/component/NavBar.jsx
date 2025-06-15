@@ -222,7 +222,6 @@ export const NavBar = () => {
                         </div>
                       </div>
                       <div className="w-full flex items-end gap-2 flex-col">
-                    <div className="w-fit flex items-end flex-col gap-2 h-fit">
                       <div
                         className="w-fit cursor-pointer"
                         onClick={() => openActiveToggle()}
